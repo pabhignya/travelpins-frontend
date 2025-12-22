@@ -1,0 +1,19 @@
+<h2>Home</h2>
+<div *ngIf="pins.length === 0">
+  Loading pins...
+</div>
+
+<table *ngIf="pins.length > 0" border="1" cellpadding="5">
+  <tr>
+    <th>Location</th>
+    <th>Photo</th>
+    <th>Notes</th>
+    <th>Visited</th>
+  </tr>
+  <tr *ngFor="let pin of pins">
+    <td>{{ pin.locationName }}</td>
+    <td><img [src]="pin.photoUrl" alt="Pin photo" width="100"></td>
+    <td>{{ pin.notes }}</td>
+    <td>{{ pin.createdAt }}</td>
+  </tr>
+</table>
