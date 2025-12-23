@@ -1,0 +1,37 @@
+<mat-sidenav-container class="dashboard-container">
+
+  <!-- Right sidebar -->
+  <mat-sidenav
+    #sidenav
+    position="end"
+    mode="side"
+    [opened]="showProfile"
+    (closedStart)="showProfile = false">
+    
+    <app-profile-sidebar (closeSidebar)="showProfile=false"></app-profile-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Fixed header -->
+    <header class="header">
+      <div class="logo">Travel Pins</div>
+      <nav>
+        <button mat-button (click)="showAbout=false">Home</button>
+        <button mat-button (click)="toggleAbout()">About</button>
+        <button mat-button (click)="toggleProfile()">Profile</button>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <app-about *ngIf="showAbout"></app-about>
+      <app-home *ngIf="!showAbout"></app-home>
+    </main>
+
+    <!-- Fixed footer -->
+    <footer class="footer">
+      <p>Travel Pins &copy; 2025 | Contact: info</p>
+    </footer>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

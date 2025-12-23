@@ -39,7 +39,7 @@ import { Pin } from '../../models/pin.model';
 
     <mat-dialog-actions align="end">
       <button mat-button (click)="close()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="save()">
+      <button mat-raised-button color="#e7c586ff" (click)="save()">
         {{ isEdit ? 'Update' : 'Save' }}
       </button>
     </mat-dialog-actions>

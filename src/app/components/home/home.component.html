@@ -1,10 +1,11 @@
-<div style="margin-bottom: 16px;">
-    <button mat-raised-button color="primary" (click)="openAddPin()">
+<div style="margin-bottom: 16px; display: flex; flex-direction: row; justify-content: space-between;">
+    <div>
+        <button mat-button (click)="toggleView('map')">Map View</button>
+        <button mat-button (click)="toggleView('list')">List View</button>
+    </div>
+    <button mat-raised-button color="#FFE5B4" (click)="openAddPin()">
         Add Place
     </button>
-    <button (click)="toggleView('map')">Map View</button>
-    <button (click)="toggleView('list')">List View</button>
-    <button mat-button (click)="logout()">Logout</button>
 </div>
 
 <app-map-view *ngIf="view === 'map'" [pins]="pins">
