@@ -1,12 +1,7 @@
+import { Pin } from './pin.model';
 import { User } from './user.model';
 
 export interface TravelPin {
-  id: number;
-  locationName: string;
-  latitude: number;
-  longitude: number;
-  notes: string;
-  photoUrl: string;
-  createdAt: string; // ISO date string
+  pin: Pin; // ISO date string
   user: User;
 }

@@ -1,19 +1,14 @@
-<h2>Home</h2>
-<div *ngIf="pins.length === 0">
-  Loading pins...
+<div style="margin-bottom: 16px;">
+    <button mat-raised-button color="primary" (click)="openAddPin()">
+        Add Place
+    </button>
+    <button (click)="toggleView('map')">Map View</button>
+    <button (click)="toggleView('list')">List View</button>
+    <button mat-button (click)="logout()">Logout</button>
 </div>
 
-<table *ngIf="pins.length > 0" border="1" cellpadding="5">
-  <tr>
-    <th>Location</th>
-    <th>Photo</th>
-    <th>Notes</th>
-    <th>Visited</th>
-  </tr>
-  <tr *ngFor="let pin of pins">
-    <td>{{ pin.locationName }}</td>
-    <td><img [src]="pin.photoUrl" alt="Pin photo" width="100"></td>
-    <td>{{ pin.notes }}</td>
-    <td>{{ pin.createdAt }}</td>
-  </tr>
-</table>
+<app-map-view *ngIf="view === 'map'" [pins]="pins">
+</app-map-view>
+
+<app-list-view *ngIf="view === 'list'" [pins]="pins">
+</app-list-view>
