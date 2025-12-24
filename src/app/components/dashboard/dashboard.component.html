@@ -1,14 +1,10 @@
 <mat-sidenav-container class="dashboard-container">
 
   <!-- Right sidebar -->
-  <mat-sidenav
-    #sidenav
-    position="end"
-    mode="side"
-    [opened]="showProfile"
-    (closedStart)="showProfile = false">
-    
-    <app-profile-sidebar (closeSidebar)="showProfile=false"></app-profile-sidebar>
+  <mat-sidenav #sidenav position="end" mode="side" [opened]="showProfile" (closedStart)="showProfile = false">
+
+    <app-profile-sidebar [profile]="profile" (closeSidebar)="showProfile=false">
+    </app-profile-sidebar>
   </mat-sidenav>
 
   <mat-sidenav-content>

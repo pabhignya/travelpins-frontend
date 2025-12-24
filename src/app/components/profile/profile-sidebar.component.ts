@@ -1,33 +1,31 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MATERIAL_MODULES } from '../../material';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-profile-sidebar',
   standalone: true,
-  imports: [CommonModule, ...MATERIAL_MODULES],
   template: `
-    <div class="sidebar-content">
+    <div class="profile-content">
       <h3>Profile</h3>
-      <p><strong>Name:</strong> John Doe</p>
-      <p><strong>Email:</strong> john.doe</p>
-      <button mat-raised-button color="#FFE5B4" (click)="logout()">Logout</button>
-      <button mat-button color="warn" (click)="close.emit()">Close</button>
+      <p>Name: {{ profile?.name }}</p>
+      <p>Email: {{ profile?.email }}</p>
+      <button mat-raised-button color="warn" (click)="close()">Close</button>
+      <button mat-button color="primary" (click)="logout()">Logout</button>
     </div>
   `,
   styles: [`
-    .sidebar-content {
+    .profile-content {
       padding: 16px;
-      width: 300px;
-      display: flex;
-      flex-direction: column;
+      width: 250px;
     }
-    button { margin-top: 12px; }
   `]
 })
 export class ProfileSidebarComponent {
+  @Input() profile: { name: string; email: string } = { name: '', email: '' };
   @Output() closeSidebar = new EventEmitter<void>();
-  close = this.closeSidebar;
+
+  close() {
+    this.closeSidebar.emit();
+  }
 
   logout() {
     window.location.href = 'http://localhost:8080/logout';

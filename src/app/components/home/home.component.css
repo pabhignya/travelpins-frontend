@@ -26,3 +26,21 @@
   bottom: 0;
   width: 100%;
 }
+
+.map-container {
+  flex: 1;
+  position: relative; /* so the map fills container */
+}
+
+.content {
+  width: 100vw;      /* 🔥 */
+  max-width: none;   /* 🔥 */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.home-body {
+  height: 100%;
+  width: 100%;
+}

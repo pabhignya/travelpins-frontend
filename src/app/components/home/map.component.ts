@@ -1,51 +1,90 @@
-import { Component, Input, AfterViewInit, OnChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import * as L from 'leaflet';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
+import maplibregl from 'maplibre-gl';
+import { MatDialog } from '@angular/material/dialog';
 import { Pin } from '../../models/pin.model';
+import { AddPinDialogComponent } from './add-pin.dialog';
 
 @Component({
   selector: 'app-map-view',
   standalone: true,
-  imports: [CommonModule],
-  template: `<div id="map" style="height: 500px;"></div>`
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
 })
 export class MapViewComponent implements AfterViewInit, OnChanges {
 
+  @ViewChild('map', { static: true }) mapEl!: ElementRef<HTMLDivElement>;
   @Input() pins: Pin[] = [];
 
-  private map!: L.Map;
-  private markers: L.Marker[] = [];
+  map!: maplibregl.Map;
+  markers: maplibregl.Marker[] = [];
 
-  ngAfterViewInit() {
+  constructor(private dialog: MatDialog) {}
+
+  ngAfterViewInit(): void {
     this.initMap();
   }
 
-  ngOnChanges() {
-    if (this.map) {
-      this.updateMarkers();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['pins'] && this.map) {
+      this.renderPins();
     }
   }
 
-  private initMap() {
-    this.map = L.map('map').setView([20, 0], 2);
+  private initMap(): void {
+    this.map = new maplibregl.Map({
+      container: this.mapEl.nativeElement,
+      style: 'https://demotiles.maplibre.org/style.json',
+      center: [0, 20],
+      zoom: 1.5,
+      maxZoom: 18
+    });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(this.map);
+    this.map.addControl(new maplibregl.NavigationControl());
 
-    this.updateMarkers();
+    this.map.on('load', () => {
+      this.renderPins();
+      this.map.resize();
+    });
   }
 
-  private updateMarkers() {
+  private renderPins(): void {
+    // remove old markers
     this.markers.forEach(m => m.remove());
     this.markers = [];
 
     this.pins.forEach(pin => {
-      const marker = L.marker([pin.latitude, pin.longitude])
-        .addTo(this.map)
-        .bindPopup(`<b>${pin.locationName}</b><br>${pin.notes || ''}`);
+      if (pin.latitude == null || pin.longitude == null) return;
+
+      const marker = new maplibregl.Marker({ color: '#1976d2' })
+        .setLngLat([pin.longitude, pin.latitude])
+        .addTo(this.map);
+
+      marker.getElement().addEventListener('click', () => {
+        this.openEditDialog(pin);
+      });
 
       this.markers.push(marker);
+    });
+  }
+
+  private openEditDialog(pin: Pin): void {
+    const ref = this.dialog.open(AddPinDialogComponent, {
+      width: '400px',
+      data: pin
+    });
+
+    ref.afterClosed().subscribe(updated => {
+      if (updated) {
+        // let HomeComponent refresh pins from backend
+      }
     });
   }
 }
