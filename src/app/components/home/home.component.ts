@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { MapViewComponent } from './map.component';
-import { ListViewComponent } from './list.component';
+import { MapViewComponent } from './map/map.component';
+import { ListViewComponent } from './list/list.component';
 import { Pin } from '../../models/pin.model';
 import { MATERIAL_MODULES } from '../../material';
 import { MatDialog } from '@angular/material/dialog';
-import { AddPinDialogComponent } from './add-pin.dialog';
+import { AddPinDialogComponent } from "./pin-dialogs/add-pin.dialog"
 
 @Component({
     selector: 'app-home',

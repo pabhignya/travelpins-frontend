@@ -3,12 +3,12 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MATERIAL_MODULES } from '../../material';
-import { PinService } from '../../services/pin.service';
-import { Pin } from '../../models/pin.model';
+import { MATERIAL_MODULES } from '../../../material';
+import { PinService } from '../../../services/pin.service';
+import { Pin } from '../../../models/pin.model';
 import { MatDialog } from '@angular/material/dialog';
-import { PinDetailDialogComponent } from './pin-detail.dialog';
-import { AddPinDialogComponent } from './add-pin.dialog';
+import { PinDetailDialogComponent } from '../pin-dialogs/pin-detail.dialog';
+import { AddPinDialogComponent } from '../pin-dialogs/add-pin.dialog';
 
 @Component({
     standalone: true,

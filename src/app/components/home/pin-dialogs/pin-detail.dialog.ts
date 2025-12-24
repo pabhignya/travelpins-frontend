@@ -1,9 +1,9 @@
 // src/app/components/pin-detail/pin-detail.dialog.ts
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MATERIAL_MODULES } from '../../material';
+import { MATERIAL_MODULES } from '../../../material';
 import { CommonModule } from '@angular/common';
-import { Pin } from '../../models/pin.model';
+import { Pin } from '../../../models/pin.model';
 
 @Component({
   standalone: true,

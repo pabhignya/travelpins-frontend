@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import maplibregl from 'maplibre-gl';
 import { MatDialog } from '@angular/material/dialog';
-import { Pin } from '../../models/pin.model';
-import { AddPinDialogComponent } from './add-pin.dialog';
+import { Pin } from '../../../models/pin.model';
+import { AddPinDialogComponent } from "../pin-dialogs/add-pin.dialog"
 
 @Component({
   selector: 'app-map-view',

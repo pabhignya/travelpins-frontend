@@ -6,17 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-footer',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <footer class="footer">
-      <p>© 2025 Travel Pins | Contact: travel</p>
-    </footer>
-  `,
-  styles: [`
-    .footer {
-      background: #f1f1f1;
-      padding: 16px;
-      text-align: center;
-    }
-  `]
+  templateUrl:'./footer.component.html',
+  styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {}

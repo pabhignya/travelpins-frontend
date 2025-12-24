@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>
+      {{ isEdit ? 'Edit Place' : 'Add Place' }}
+    </h2>
+
+    <mat-dialog-content>
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>Place</mat-label>
+        <input matInput [(ngModel)]="locationName">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>Notes</mat-label>
+        <textarea matInput rows="3" [(ngModel)]="notes"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>Latitude</mat-label>
+        <input matInput type="number" [(ngModel)]="latitude">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>Longitude</mat-label>
+        <input matInput type="number" [(ngModel)]="longitude">
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="close()">Cancel</button>
+      <button mat-raised-button color="#e7c586ff" (click)="save()">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+    </mat-dialog-actions>

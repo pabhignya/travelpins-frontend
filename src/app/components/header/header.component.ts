@@ -8,18 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, MatToolbarModule, MatButtonModule],
-  template: `
-    <mat-toolbar color="#FFE5B4">
-      <span>Travel Pins</span>
-      <span class="spacer"></span>
-      <button mat-button (click)="selectView('home')">Home</button>
-      <button mat-button (click)="selectView('about')">About</button>
-      <button mat-button (click)="toggleProfile.emit(true)">Profile</button>
-    </mat-toolbar>
-  `,
-  styles: [`
-    .spacer { flex: 1 1 auto; }
-  `]
+  template: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
   @Output() toggleProfile = new EventEmitter<boolean>();
