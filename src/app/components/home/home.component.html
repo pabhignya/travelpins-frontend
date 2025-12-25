@@ -9,10 +9,10 @@
 </div>
 
 <div class="home-body">
-  <app-map-view *ngIf="view === 'map'" [pins]="pins"></app-map-view>
+    <app-map-view *ngIf="view === 'map'" [pins]="pins" (refreshPins)="fetchPins()">
+    </app-map-view>
 
-  <app-list-view
-    *ngIf="view === 'list'"
-    [pins]="pins">
-  </app-list-view>
+
+    <app-list-view *ngIf="view === 'list'" [pins]="pins">
+    </app-list-view>
 </div>

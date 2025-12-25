@@ -5,12 +5,14 @@ import {
   ViewChild,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import maplibregl from 'maplibre-gl';
 import { MatDialog } from '@angular/material/dialog';
 import { Pin } from '../../../models/pin.model';
-import { AddPinDialogComponent } from "../pin-dialogs/add-pin.dialog"
+import { AddPinDialogComponent } from '../pin-dialogs/add-pin.dialog';
 
 @Component({
   selector: 'app-map-view',
@@ -22,6 +24,9 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('map', { static: true }) mapEl!: ElementRef<HTMLDivElement>;
   @Input() pins: Pin[] = [];
+
+  // 🔥 TELL PARENT TO REFRESH
+  @Output() refreshPins = new EventEmitter<void>();
 
   map!: maplibregl.Map;
   markers: maplibregl.Marker[] = [];
@@ -44,7 +49,8 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
       style: 'https://demotiles.maplibre.org/style.json',
       center: [0, 20],
       zoom: 1.5,
-      maxZoom: 18
+      maxZoom: 18,
+      renderWorldCopies: false 
     });
 
     this.map.addControl(new maplibregl.NavigationControl());
@@ -52,6 +58,23 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
     this.map.on('load', () => {
       this.renderPins();
       this.map.resize();
+    });
+
+    // ✅ CLICK ON MAP → ADD PIN
+    this.map.on('click', (e) => {
+      const ref = this.dialog.open(AddPinDialogComponent, {
+        width: '400px',
+        data: {
+          latitude: e.lngLat.lat,
+          longitude: e.lngLat.lng
+        }
+      });
+
+      ref.afterClosed().subscribe(saved => {
+        if (saved) {
+          this.refreshPins.emit(); // 🔥 refresh parent
+        }
+      });
     });
   }
 
@@ -63,7 +86,7 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
     this.pins.forEach(pin => {
       if (pin.latitude == null || pin.longitude == null) return;
 
-      const marker = new maplibregl.Marker({ color: '#1976d2' })
+      const marker = new maplibregl.Marker({ color: '#799ec3' })
         .setLngLat([pin.longitude, pin.latitude])
         .addTo(this.map);
 
@@ -83,7 +106,7 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
 
     ref.afterClosed().subscribe(updated => {
       if (updated) {
-        // let HomeComponent refresh pins from backend
+        this.refreshPins.emit(); // 🔥 THIS FIXES YOUR ISSUE
       }
     });
   }
